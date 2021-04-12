@@ -1,1 +1,1 @@
-from great_project.website import app  # noqa: F401
+from the_book.website import app  # noqa: F401

@@ -71,7 +71,7 @@ Now you should be ready to get the starter template running on your computer!
 
 - Run the local development server and make sure it all works. Instructions can be found at the top of this readme for using Flask's built in development server. Alternatively (only on macOS or Linux), you can use the command `uwsgi` to start your development server: 
 
-> uwsgi --http-socket 127.0.0.1:5000 --wsgi-file great_project/website.py --callable app --processes 4 --threads 2 --stats 127.0.0.1:8181 -H venv/
+> uwsgi --http-socket 127.0.0.1:5000 --wsgi-file the_book/website.py --callable app --processes 4 --threads 2 --stats 127.0.0.1:8181 -H venv/
 
 You should be able to run the website locally and see it in your local browser! 
 
