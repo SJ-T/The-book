@@ -1,4 +1,4 @@
-from The-book.the_book import app
+from the_book import app
 
 
 def test_index():
