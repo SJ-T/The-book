@@ -1,0 +1,70 @@
+{% extends "contentbase.html" %}
+{% block content %}
+
+<div id="book-detail" class="row">
+    <div id="cover" class="pl-2 col-5 p-0">
+        {% if book.isbn=="null"%}
+        <img src="/static/default-cover.jpg" height="450" alt="default-cover" class=" mt-2 ">
+        {% else%}
+        <img src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-L.jpg" height="450" alt="cover-img" class=" mt-2 ">
+        {% endif %}
+
+    </div>
+    <div id="info" class="col-7">
+        <div id="book-info" class=" mt-lg-3 ml-lg-3">
+            <h1 class="title">{{title}}</h1>
+            <h5 class="author">by {{book.author}}</h5>
+            <div class="d-block">ISBN10: {{book.isbn}}</div>
+            <div class="d-block">Number of pages: {{book.num_page}}</div>
+            <div class="d-block">Published {{book.publication_date}} by {{book.publisher}}</div>
+        </div>
+
+        <div id="add-to-shelf" class="mt-lg-3 ml-lg-3">
+            <form onsubmit="addToShelf('{{book.id}}')">
+                <input type="submit" class="btn btn-lg p-0" value="Add to my shelf">
+            </form>
+
+        </div>
+        <div id="ratings" class="mt-1 ml-lg-4">
+            <div id="numbers" class="">
+                <div id="average" class="">{{book.average_rating}}</div>
+                <div class="my-auto" id="rating-count">
+                    <div id="num">{{book.ratings_count}}</div>
+                    <span class="d-block ">ratings</span>
+                </div>
+            </div>
+            <div class="Stars" style="--rating: {{book.average_rating}};"
+                aria-label="Rating of this product is 2.3 out of 5.">
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+<div id="sec-par" class="ml-lg-5">
+    <div class="">
+        <span id="sec-tit" class="d-block">Description</span>
+        <div id="description" class="">
+            <p class="description">
+                {{book.description}}
+            </p>
+        </div>
+    </div>
+    <span id="sec-tit" class="prom">How do you this book?</span>
+    <div id="rating-f">
+        <form action="{{url_for('add_rating',book_id=book.id)}}" method="POST" id="rate" class="rate  pl-3">
+            <input type="radio" name="star" id="star5" value="5"><label for="star5">5</label>
+            <input type="radio" name="star" id="star4" value="4"><label for="star4">4</label>
+            <input type="radio" name="star" id="star3" value="3"><label for="star3">3</label>
+            <input type="radio" name="star" id="star2" value="2"><label for="star2">2</label>
+            <input type="radio" name="star" id="star1" value="1"><label for="star1">1</label>
+        </form>
+        <input class="border-0 rounded ml-4" type="submit" value="Submit" form="rate">
+    </div>
+
+</div>
+
+
+
+{% endblock %}

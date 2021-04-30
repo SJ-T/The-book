@@ -1,0 +1,132 @@
+{% extends "contentbase.html" %}
+{% block content %}
+
+<div class="border">
+    <form action="" method="POST">
+        {{ form.hidden_tag()}}
+        <fieldset class="form-group">
+            <legend class=" mb-4">Account Info</legend>
+            <div class="account">
+                <div class="media">
+                    <!-- <img class="rounded-circle account-img" src="userimage.jpg"> -->
+                    <div class="media-body">
+                        <h2 class="account-heading">{{current_user.username}}</h2>
+                        <p class="text-secondary">{{current_user.email}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            {{form.username.label(class="form-control-label")}}
+
+                            {% if form.username.errors%}
+                            {{form.username(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                <span>{{error}}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{form.username(class="form-control form-control-lg")}}
+
+                            {% endif %}
+
+                        </div>
+                        <div class="form-group">
+                            {{form.email.label(class="form-control-label")}}
+
+                            {% if form.email.errors%}
+                            {{form.email(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                <span>{{error}}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{form.email(class="form-control form-control-lg")}}
+
+                            {% endif %}
+
+                        </div>
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-outline-info")}}
+                        </div>
+                    </div>
+
+                </div>
+
+
+        </fieldset>
+
+    </form>
+
+    <div class="" id="my-shelf">
+        <legend class=" mb-4">My Shelf</legend>
+        <div class="row d-flex flex-wrap flex-start ml-0">
+            {% for book in book_list %}
+            <div id="my-book" class="col-xl-2 col-lg-3 ml-4 mb-5 pb-0 ">
+                <div id="my-book-cover">
+                    {% if book.isbn=="null" %}
+                    <a href="{{url_for('book_detail', book_id=book.id)}}">
+                        <img src="/static/default-cover.jpg" height="240" alt="default-cover" class=" mt-2">
+                    </a>
+                    {% else %}
+                    <a href="{{url_for('book_detail', book_id=book.id)}}">
+                        <img src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-M.jpg" height="240" alt="cover-img"
+                            class=" mt-2">
+                    </a>
+                    {% endif %}
+                </div>
+                <div id="info" class="">
+                    <a href="{{url_for('book_detail', book_id=book.id)}}">
+                        <h6 id="title" class="mt-1 mb-1">
+                            {{ book.title }}
+                        </h6>
+                    </a>
+                    <p id="author" class="mt-1 mb-0">
+                        by {{ book.author }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div id="my-ratings" class="">
+        <legend class="mb-4">My Ratings</legend>
+        <div class="row d-flex flex-wrap flex-start">
+            {% for book in rate_books %}
+            <div id="my-book" class="col-xl-2 col-lg-3 ml-4 mb-5 pb-0 ">
+                <div id="my-book-cover">
+                    {% if book.isbn=="null" %}
+                    <a href="{{url_for('book_detail', book_id=book.id)}}">
+                        <img src="/static/default-cover.jpg" height="240" alt="default-cover" class=" mt-2">
+                    </a>
+                    {% else %}
+                    <a href="{{url_for('book_detail', book_id=book.id)}}">
+                        <img src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-M.jpg" height="240" alt="cover-img"
+                            class=" mt-2">
+                    </a>
+                    {% endif %}
+                </div>
+                <div id="info" class="">
+                    <a href="{{url_for('book_detail', book_id=book.id)}}">
+                        <h6 id="title" class="mt-1 mb-1">
+                            {{ book.title }}
+                        </h6>
+                    </a>
+                    <div id="my-rating" class="">
+                        <div class="Stars" style="--rating: {{book.raters.rating}};"></div>
+                    </div>
+
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

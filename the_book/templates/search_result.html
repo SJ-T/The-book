@@ -1,0 +1,34 @@
+{% extends "contentbase.html" %}
+{% block content %}
+<div class="row d-flex p-3 border flex-wrap justify-content-between" id="result-box">
+    {% for book in book_result%}
+
+    <div id="book-item" class="book-item col-md-5 col-lg-3 col-xl-3 m-1 mb-sm-3 mb-xs-3 mb-2 p-1">
+        <div id="cover">
+            {% if book.isbn=="null"%}
+            <a href="{{url_for('book_detail', book_id=book.id)}}">
+                <img src="/static/default-cover.jpg" height="240" alt="default-cover" class="medium mt-2">
+            </a>
+            {% else%}
+            <a href="{{url_for('book_detail', book_id=book.id)}}">
+                <img src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-M.jpg" height="240" alt="cover-img"
+                    class="medium mt-2">
+            </a>
+            {% endif %}
+        </div>
+
+        <div id="info" class="">
+            <a href="{{url_for('book_detail', book_id=book.id)}}">
+                <h6 id="title" class="mt-1 pl-4">
+                    {{ book.title }}
+                </h6>
+            </a>
+            <p id="author" class="mt-1 pl-4">
+                by {{ book.author }}
+            </p>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

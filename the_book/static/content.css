@@ -1,0 +1,256 @@
+#book-item,
+#my-book{
+    height:auto;
+    border: 4px solid black;
+  }
+
+#book-detail{
+    height: auto;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#book-detail #cover img{
+    width:100%;
+    /* height:100%; */
+    object-fit:contain;
+}
+
+span#sec-tit{
+    font-family: "Overpass", sans-serif;
+    font-size: 2rem;
+}
+
+#description{
+    padding-left: 1rem;
+}
+
+#ratings{
+    display: flex;
+    flex-direction: column;
+}
+
+#ratings #numbers,
+#rating-f{
+    display: flex;
+    flex-direction: row;
+}
+#rating-f{
+    align-items: center;
+}
+#rating-count{
+    flex-grow: 1;
+    font-family: "Overpass", sans-serif;
+    font-size: 1.25rem;
+    padding-left: 2rem;
+}
+
+#average{
+    font-family: "Overpass", sans-serif;
+    font-size: 3.7rem;
+}
+
+:root {
+    --star-size: 45px;
+    --star-color: rgb(131, 131, 131);
+    --star-background: #fc0;
+  }
+
+#my-rating{
+    --star-size: 28px;
+}
+
+.Stars {
+--percent: calc(var(--rating) / 5 * 100%);
+
+display: inline-block;
+font-size: var(--star-size);
+font-family: Times; 
+line-height: 1;
+}
+
+.Stars::before {
+    content: '★★★★★';
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+ .rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+} 
+
+.prom{
+    display: block;
+}
+a img{
+    display: block;
+    margin:auto; 
+  }
+
+#result-box #book-item #cover a img,
+#my-shelf #my-book-cover a img,
+#my-ratings #my-book-cover a img{
+max-width: 100%;
+  }
+/* #my-book-cover{
+    width:auto;
+    height:60%
+}
+#my-book #info{
+    height:37%;
+    width:auto;
+} */
+
+
+a h6,
+h1.title{
+    font-family: "Gentium Book Basic", serif;
+    font-weight: 700;
+    font-size: large;
+}
+h1.title{
+    font-size: xx-large;
+}
+#info a #title,
+#info #author{
+    font-size: medium;
+}
+p#author,
+h5.author{
+    font-family: 'PT Sans Narrow', sans-serif;
+}
+
+#result-box{
+    height: auto;
+
+}
+
+@media (min-width: 1200px){
+    #sec-par{
+        margin-left: 5rem !important;
+    }
+}
+@media (max-width: 1200px) and (min-width: 992px)  {
+    #result-box{
+        justify-content: space-around !important;
+    }
+
+}
+
+@media (max-width: 991px){
+    /* #my-book-cover a img{
+        height:auto;
+        width:20%;
+        display: inline;
+    } */
+    #my-book{
+        display: flex !important;
+        margin-left: 0 !important;
+    }
+    #my-book #my-book-cover a img{
+        margin-bottom: 0.5rem;
+    }
+    #my-book #info{
+        margin-top:1rem;
+        margin-left:1rem;
+    }
+    #book-detail #cover img{
+        width:100%;
+        /* height:100%; */
+        object-fit:cover;
+    }
+    #book-detail #info{
+        padding-top: 1rem;
+    }
+
+
+}
+
+@media (max-width: 768px) {
+    #book-item{
+        display: flex;
+    }
+    #result-box{
+        flex-wrap: nowrap;
+    }
+    #result-box #book-item #cover a img{
+        margin:0.5rem 1rem;
+    }
+    #info{
+    max-width: 50%;
+}
+    #book-item #info{
+        margin-top: 0.5rem;
+    }
+    
+    #book-detail #cover{
+        /* display: inline; */
+    }
+    #book-detail #cover img{
+        width:100%;
+        height:auto;
+        object-fit:scale-down;
+        
+    }
+   
+    #book-detail #info .title{
+        font-size: 24px;
+    }
+    #book-detail #info .author{
+        font-size: 1.1rem;
+    }
+    #book-detail #info .d-block{
+        font-size: 0.8rem;
+    }
+    span#sec-tit{
+        font-size: 1.4rem;
+    }
+
+
+}
+@media (max-width: 753px){
+    :root {
+        --star-size: 30px;
+    }
+    #rating-count{
+        font-size: 1rem;
+    }
+    #average{
+        font-family: "Overpass", sans-serif;
+        font-size: 2rem;
+    }
+
+}

@@ -1,24 +1,97 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title> {{ page_title }}</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  {% if title %}
+  <title>{{title}}</title>
+  {% else %}
+  <title>The Book</title>
+  {% endif %}
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Basic&family=Overpass:wght@100;200&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
+  <section class="split-view">
+    <div class="box box1">
+      <div class="box-overlay h-100">
+        <header class="site-header">
+          <nav class="navbar navbar-expand-md navbar-light fixed-top ">
+            <div class="container">
+              <a class="navbar-brand mr-4" href="/">The Book</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
 
-    <header>
-        <div class="banner">
-            <h1> The Book </h1>
-        </div>
-    </header>
-    <main>
-        {% block content%} {% endblock %}
-    </main>
-    <footer>
+              <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav">
+                  <a class="nav-item nav-link" href="{{url_for('index')}}">Home</a>
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                  {% if current_user.is_authenticated %}
+                  <a class="nav-item nav-link" href="{{url_for('account')}}">Account</a>
+                  <a class="nav-item nav-link" href="{{url_for('logout')}}">Logout</a>
+                  {% else %}
+                  <a class="nav-item nav-link" href="{{url_for('login')}}">Login</a>
+                  <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </nav>
+        </header>
+        <main role="main" class="container px-5 h-100 my-auto">
+          <div class="row h-100 my-auto">
+            <div class="col-md-10 my-auto">
+              {% with messages=get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+              {% for category, message in messages %}
+              <div class="alert alert-{{ category }} ">
+                {{message}}
+              </div>
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+              {% block content %}{% endblock %}
+            </div>
+            <!-- <div class="col-lg-6">
+                  <img src="https://s3.eu-central-1.amazonaws.com/uploads.mangoweb.org/shared-prod/visegradfund.org/uploads/2019/11/canva-literary-book-pages-background.jpg" alt="background-img">
+              </div> -->
+
+            <!-- </div> -->
+        </main>
+      </div>
+    </div>
+    <div class="box box2"></div>
+
+  </section>
+
+
+  <!-- <footer>
         <h3> <em> By Sijia </em></h3>
-    </footer>
+    </footer> -->
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
+</html>
