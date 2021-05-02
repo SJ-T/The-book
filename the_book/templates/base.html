@@ -27,18 +27,16 @@
     <div class="box box1">
       <div class="box-overlay h-100">
         <header class="site-header">
-          <nav class="navbar navbar-expand-md navbar-light fixed-top ">
-            <div class="container">
-              <a class="navbar-brand mr-4" href="/">The Book</a>
+          <nav id="nav" class="navbar navbar-expand-md navbar-light fixed-top ">
+            <div class="container-fluid px-5">
+              <a class="navbar-brand mr-4" href="{{url_for('index')}}">The Book</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                 aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
 
               <div class="collapse navbar-collapse" id="navbarToggle">
-                <div class="navbar-nav">
-                  <a class="nav-item nav-link" href="{{url_for('index')}}">Home</a>
-                </div>
+
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
                   {% if current_user.is_authenticated %}
@@ -53,25 +51,24 @@
             </div>
           </nav>
         </header>
-        <main role="main" class="container px-5 h-100 my-auto">
-          <div class="row h-100 my-auto">
-            <div class="col-md-10 my-auto">
-              {% with messages=get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-              {% for category, message in messages %}
-              <div class="alert alert-{{ category }} ">
-                {{message}}
-              </div>
-              {% endfor %}
-              {% endif %}
-              {% endwith %}
-              {% block content %}{% endblock %}
+        <main role="main" class="container px-5 h-100 ">
+          <div id="forms" class="mx-auto">
+            {% with messages=get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} ">
+              {{message}}
             </div>
-            <!-- <div class="col-lg-6">
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+          </div>
+          <!-- <div class="col-lg-6">
                   <img src="https://s3.eu-central-1.amazonaws.com/uploads.mangoweb.org/shared-prod/visegradfund.org/uploads/2019/11/canva-literary-book-pages-background.jpg" alt="background-img">
               </div> -->
 
-            <!-- </div> -->
+          <!-- </div> -->
         </main>
       </div>
     </div>

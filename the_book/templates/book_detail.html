@@ -20,11 +20,12 @@
         </div>
 
         <div id="add-to-shelf" class="mt-lg-3 ml-lg-3">
-            <form onsubmit="addToShelf('{{book.id}}')">
+            <form action="{{ url_for('add_to_shelf', book_id=book.id)}}" method="POST">
                 <input type="submit" class="btn btn-lg p-0" value="Add to my shelf">
             </form>
 
         </div>
+
         <div id="ratings" class="mt-1 ml-lg-4">
             <div id="numbers" class="">
                 <div id="average" class="">{{book.average_rating}}</div>
@@ -39,9 +40,16 @@
 
         </div>
     </div>
-
-
 </div>
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="w-75 mx-auto mt-3 alert alert-{{ category }} ">
+    {{message}}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
 <div id="sec-par" class="ml-lg-5">
     <div class="">
         <span id="sec-tit" class="d-block">Description</span>

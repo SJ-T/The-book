@@ -1,7 +1,7 @@
 {% extends "contentbase.html" %}
 {% block content %}
 
-<div class="border">
+<div class="">
     <form action="" method="POST">
         {{ form.hidden_tag()}}
         <fieldset class="form-group">
@@ -62,9 +62,9 @@
 
     <div class="" id="my-shelf">
         <legend class=" mb-4">My Shelf</legend>
-        <div class="row d-flex flex-wrap flex-start ml-0">
+        <div class="row d-flex flex-wrap flex-start ml-0 mr-0">
             {% for book in book_list %}
-            <div id="my-book" class="col-xl-2 col-lg-3 ml-4 mb-5 pb-0 ">
+            <div id="my-book" class="col-xl-2 col-lg-3 col-md-5 ml-4 mb-5 pb-0 ">
                 <div id="my-book-cover">
                     {% if book.isbn=="null" %}
                     <a href="{{url_for('book_detail', book_id=book.id)}}">
@@ -95,29 +95,29 @@
 
     <div id="my-ratings" class="">
         <legend class="mb-4">My Ratings</legend>
-        <div class="row d-flex flex-wrap flex-start">
-            {% for book in rate_books %}
-            <div id="my-book" class="col-xl-2 col-lg-3 ml-4 mb-5 pb-0 ">
+        <div class="row d-flex flex-wrap flex-start ml-0 mr-0">
+            {% for rating in rate_books %}
+            <div id="my-book" class="col-xl-2 col-lg-3 col-md-5 ml-4 mb-5 pb-0 ">
                 <div id="my-book-cover">
-                    {% if book.isbn=="null" %}
-                    <a href="{{url_for('book_detail', book_id=book.id)}}">
+                    {% if rating.book.isbn=="null" %}
+                    <a href="{{url_for('book_detail', book_id=rating.book_id)}}">
                         <img src="/static/default-cover.jpg" height="240" alt="default-cover" class=" mt-2">
                     </a>
                     {% else %}
-                    <a href="{{url_for('book_detail', book_id=book.id)}}">
-                        <img src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-M.jpg" height="240" alt="cover-img"
-                            class=" mt-2">
+                    <a href="{{url_for('book_detail', book_id=rating.book_id)}}">
+                        <img src="http://covers.openlibrary.org/b/isbn/{{rating.book.isbn}}-M.jpg" height="240"
+                            alt="cover-img" class=" mt-2">
                     </a>
                     {% endif %}
                 </div>
-                <div id="info" class="">
-                    <a href="{{url_for('book_detail', book_id=book.id)}}">
+                <div id="info" class="mb-5">
+                    <a href="{{url_for('book_detail', book_id=rating.book_id)}}">
                         <h6 id="title" class="mt-1 mb-1">
-                            {{ book.title }}
+                            {{ rating.book.title }}
                         </h6>
                     </a>
                     <div id="my-rating" class="">
-                        <div class="Stars" style="--rating: {{book.raters.rating}};"></div>
+                        <div class="Stars" style="--rating: {{rating.rating}};"></div>
                     </div>
 
                 </div>

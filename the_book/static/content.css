@@ -76,6 +76,9 @@ line-height: 1;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+input[type="radio"][name="star"]{
+    visibility: hidden;
+}
 
 
 .rate {
@@ -125,14 +128,40 @@ a img{
 #my-ratings #my-book-cover a img{
 max-width: 100%;
   }
-/* #my-book-cover{
-    width:auto;
-    height:60%
+#info #my-rating{
+    position: absolute;
+    bottom: 2%;
 }
-#my-book #info{
-    height:37%;
-    width:auto;
-} */
+#my-book #info #title{
+    --lh:19px;
+    --max-lines:2;
+    position: relative;
+    max-height: calc(var(--lh)*var(--max-lines));
+    overflow: hidden;
+    /* padding-right: 1rem; */
+}
+#my-book #info #title::before{
+    position: absolute;
+    content: "...";
+
+    bottom: 0;
+    right: 0;
+  }
+  #my-book #info #title::after {
+    content: "";
+    position: absolute;
+  /*   inset-inline-end: 0; */
+    right: 0;
+    width: 1rem;
+    height: 1rem;
+    background: white;
+  }
+
+  #result-box #cover,
+  #my-book-cover{
+    flex-basis: 41%;
+}
+
 
 
 a h6,
@@ -167,26 +196,15 @@ h5.author{
     #result-box{
         justify-content: space-around !important;
     }
+    #my-book #info #title,
+    #my-book #info #author,
+    #my-book #my-rating{
+        padding-left: 1rem;
+    }
 
 }
 
 @media (max-width: 991px){
-    /* #my-book-cover a img{
-        height:auto;
-        width:20%;
-        display: inline;
-    } */
-    #my-book{
-        display: flex !important;
-        margin-left: 0 !important;
-    }
-    #my-book #my-book-cover a img{
-        margin-bottom: 0.5rem;
-    }
-    #my-book #info{
-        margin-top:1rem;
-        margin-left:1rem;
-    }
     #book-detail #cover img{
         width:100%;
         /* height:100%; */
@@ -197,24 +215,42 @@ h5.author{
     }
 
 
+
+}
+@media (max-width:991px) and (min-width:768px){
+    /* #my-book #info{
+        margin-top:1rem;
+        margin-left:1rem;
+    } */
+ 
+    #result-box #info #title,
+    #result-box #info #author
+    {
+        padding-left: 1.5rem;
+    }
+    #my-book #info #title,
+    #my-book #info #author,
+    #my-book #my-rating{
+        padding-left: 2.7rem;
+    }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     #book-item{
         display: flex;
     }
     #result-box{
         flex-wrap: nowrap;
     }
-    #result-box #book-item #cover a img{
+    /* #result-box #book-item #cover a img{
         margin:0.5rem 1rem;
-    }
-    #info{
+    } */
+    #result-box #info,
+    #my-book #info{
     max-width: 50%;
+    margin-top:1rem;
+    margin-left:1rem;
 }
-    #book-item #info{
-        margin-top: 0.5rem;
-    }
     
     #book-detail #cover{
         /* display: inline; */
@@ -238,10 +274,6 @@ h5.author{
     span#sec-tit{
         font-size: 1.4rem;
     }
-
-
-}
-@media (max-width: 753px){
     :root {
         --star-size: 30px;
     }
@@ -253,4 +285,36 @@ h5.author{
         font-size: 2rem;
     }
 
+    #my-book{
+        display: flex !important;
+        margin-left: 0 !important;
+    }
+    #result-box #cover a img,
+    #my-book #my-book-cover a img{
+        margin-bottom: 0.5rem;
+    }
+
+    #info #my-rating{
+        position: unset;
+        bottom: unset;
+    }
+    #my-book #info #title{
+        max-height: unset;
+        overflow: unset;
+
+    }
+    #my-book #info #title::before{
+        position: unset;
+        content: unset;
+      }
+      #my-book #info #title::after {
+        content: unset;
+        position: unset;
+        background:unset;
+      }
+
 }
+/* @media (max-width: 753px){
+
+
+} */

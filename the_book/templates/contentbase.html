@@ -28,7 +28,7 @@
 <body>
     <div id="content-page" class="container">
         <header class="site-header">
-            <nav class="navbar navbar-expand-md navbar-light fixed-top ">
+            <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top ">
                 <div class="container">
                     <a class="navbar-brand mr-4" href="/">The Book</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
@@ -37,9 +37,7 @@
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarToggle">
-                        <div class="navbar-nav">
-                            <a class="nav-item nav-link" href="{{url_for('index')}}">Home</a>
-                        </div>
+
                         <!-- Navbar Right Side -->
                         <div class="navbar-nav">
                             {% if current_user.is_authenticated %}

@@ -25,6 +25,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     shelf = db.relationship('Book', secondary=to_read_list, backref=db.backref('readers'), lazy='dynamic')
     ratings = db.relationship('BookRating', backref='rater', lazy='dynamic')
+
+
     # # backref similar to adding another column to the post model, when we have a post we can simply use this 'author' attribute to get the user who created the post. post_instance.author => User('[username]','[email]')
     # posts = db.relationship('Post', backref='author', lazy=True)
     # # 'Post' reference the Post class.
@@ -44,14 +46,18 @@ class Book(db.Model):
     ratings_count = db.Column(db.Integer,nullable=True) 
     publication_date = db.Column(db.Text,nullable=True)
     publisher = db.Column(db.String(200),nullable=True)
-    
+    # ratings = db.relationship('BookRating', backref='book', lazy='dynamic')
+    def __repr__(self):
+        return f"Book('{self.id}','{self.title}')"
+
+
 #many-to-many relationship, 2 foreign keys with extra data 
 class BookRating(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), primary_key=True)
     rating = db.Column(db.Integer)
     user = db.relationship("User", backref="books")
-    book = db.relationship("Book", backref=db.backref("raters", uselist=False))
+    book = db.relationship("Book", backref="raters")
 
 
 

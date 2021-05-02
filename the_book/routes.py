@@ -32,6 +32,7 @@ def index():
 @app.route('/search_result')
 @app.route('/search_result/<search>&<by>')
 def search_result(search,by):
+    
     book_result = Book.query.filter(getattr(Book,str(by)).ilike(f'%{search}%')).all()
     print(book_result)
     return render_template('search_result.html', book_result=book_result)
@@ -43,36 +44,36 @@ def book_detail(book_id):
     isbn = book.isbn
     return render_template('book_detail.html',book=book, title=title, isbn=isbn)
 
-# @app.route('/boo_detail/<book_id>/add_to_shelf', methods=['POST'])
-# @login_required 
-# def add_to_shelf(book_id):
-#     user = User.query.filter_by(id=current_user.id).first()
-#     book = Book.query.filter_by(id=book_id).first()
-#     try:
-#         #add record to compound key table(many to many), 'readers' is the backref defined in the User class(table)
-#         book.readers.append(user)
-#         db.session.commit()
-#         flash('The book is successfully added to your shelf!', 'success')
-#         return redirect(url_for('book_detail', book_id=book.id))
-#     except IntegrityError:
-#         db.session.rollback()
-#         flash('The book is already in your shelf.','info')
-#         return redirect(url_for('book_detail', book_id=book.id))
-
-@app.route('/api/shelf', methods=['POST'])
+@app.route('/boo_detail/<book_id>/add_to_shelf', methods=['POST'])
+@login_required 
 def add_to_shelf(book_id):
-    print(book_id)
     user = User.query.filter_by(id=current_user.id).first()
     book = Book.query.filter_by(id=book_id).first()
     try:
-        #add record to compound key table(many to many), 'readers' is the backref defined in the User class(table)
+        #add record to composite key table(many to many), 'readers' is the backref defined in the User class(table)
         book.readers.append(user)
         db.session.commit()
-        return Response(status=201)
+        flash('The book is successfully added to your shelf!', 'success')
+        return redirect(url_for('book_detail', book_id=book.id))
     except IntegrityError:
         db.session.rollback()
-        error_code = 500
-        return error_code
+        flash('The book is already in your shelf.','info')
+        return redirect(url_for('book_detail', book_id=book.id))
+
+# @app.route('/api/shelf', methods=['POST'])
+# def add_to_shelf(book_id):
+#     print(book_id)
+#     user = User.query.filter_by(id=current_user.id).first()
+#     book = Book.query.filter_by(id=book_id).first()
+#     try:
+#         #add record to composite key table(many to many), 'readers' is the backref defined in the User class(table)
+#         book.readers.append(user)
+#         db.session.commit()
+#         return Response(status=201)
+#     except IntegrityError:
+#         db.session.rollback()
+#         error_code = 500
+#         return error_code
 
 
 @app.route('/add_rating/<book_id>', methods=['POST'])
@@ -82,9 +83,10 @@ def add_rating(book_id):
     user = User.query.filter_by(id=current_user.id).first()
     book = Book.query.filter_by(id=book_id).first()
     star = request.form.get('star')
-    print(star)
+    print(user, book, star)
     try:
         rating = BookRating(user=user, book=book, rating=star)
+        print(rating.user_id)
         db.session.add(rating)
         db.session.commit()
         flash('Your ratings have been added!', 'success')
@@ -162,7 +164,12 @@ def account():
         form.email.data = current_user.email
 
     book_list = Book.query.filter(Book.readers.any(id=current_user.id)).all()
-    rate_books = Book.query.filter(Book.raters.has(user_id=current_user.id)).all()
+    # rate_books = Book.query.filter(Book.raters.has(user_id=current_user.id)).all()
+    rate_books = BookRating.query.filter_by(user_id=current_user.id).all()
+    # for rating in rate_books:
+    #     print(rating.book.isbn)
+    #     print(rating.rating)
+
     # for book in rate_books:
     #     ratings = book.raters.rating
     #     print(ratings)

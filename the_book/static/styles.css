@@ -1,7 +1,5 @@
 body {
-  /* background: url("https://s3.eu-central-1.amazonaws.com/uploads.mangoweb.org/shared-prod/visegradfund.org/uploads/2019/11/canva-literary-book-pages-background.jpg")white;
-  background-position-x: center;
-  background-size: cover; */
+
   color: #333333;
   margin-top: 5rem;
 }
@@ -25,7 +23,7 @@ body {
 }
 
 .box2 {
-  /* background: url("https://s3.eu-central-1.amazonaws.com/uploads.mangoweb.org/shared-prod/visegradfund.org/uploads/2019/11/canva-literary-book-pages-background.jpg") */
+  background: url("./canva-literary-book-pages-background.jpg")
     white;
   background-size: cover;
 }
@@ -56,11 +54,15 @@ h6 {
 .flex-items {
   height: 130px;
   max-width: 450px;
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  margin-right: 28px;
 }
 
 .search-text {
   display: block;
-  width: 75%;
+  flex-grow: 1;
 }
 
 select.custom-select {
@@ -111,11 +113,29 @@ label {
   font-weight: 700;
 }
 
+#log-form {
+  position: absolute;
+  top: 21%;
+}
 
+#reg-form{
+  position: absolute;
+  top: 8%;
+}
 
-@media (max-width: 1220px) {
-  select.custom-select {
-    /* width: 28%; */
+input.form-control.form-control-lg {
+  max-width: 450px;
+}
+
+@media (min-width: 1370px) {
+  .flex-items {
+    position: absolute;
+    left: unset;
+    right: 17%;
+  }
+  #log-form,
+  #reg-form {
+    right: 5%;
   }
 }
 
@@ -125,7 +145,7 @@ label {
   }
   .box1 {
     flex-grow: 1;
-    /* background: url("https://s3.eu-central-1.amazonaws.com/uploads.mangoweb.org/shared-prod/visegradfund.org/uploads/2019/11/canva-literary-book-pages-background.jpg") white; */
+    background: url(canva-literary-book-pages-background.jpg) white;
       
     background-size: cover;
     background-position: center;
@@ -138,9 +158,9 @@ label {
     height: 100%;
     background: rgba(165, 165, 165, 0.377);
   }
-  .col-md-10 {
+  /* .col-md-10 {
     margin: auto;
-  }
+  } */
   .flex-items {
     margin: auto;
   }
@@ -150,6 +170,9 @@ label {
   }
   main.container {
     /* padding-left: 15px !important; */
+  }
+  body #nav{
+    background-color: #f1f1f1a6;
   }
 }
 

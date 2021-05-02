@@ -1,9 +1,9 @@
 {% extends "contentbase.html" %}
 {% block content %}
-<div class="row d-flex p-3 border flex-wrap justify-content-between" id="result-box">
+<div class="row d-flex p-3  flex-wrap justify-content-between" id="result-box">
     {% for book in book_result%}
 
-    <div id="book-item" class="book-item col-md-5 col-lg-3 col-xl-3 m-1 mb-sm-3 mb-xs-3 mb-2 p-1">
+    <div id="book-item" class="book-item col-md-5 col-lg-3 col-xl-3 m-1 mb-sm-3 mb-xs-3 mb-2">
         <div id="cover">
             {% if book.isbn=="null"%}
             <a href="{{url_for('book_detail', book_id=book.id)}}">
@@ -19,11 +19,11 @@
 
         <div id="info" class="">
             <a href="{{url_for('book_detail', book_id=book.id)}}">
-                <h6 id="title" class="mt-1 pl-4">
+                <h6 id="title" class="mt-1 pl-lg-4">
                     {{ book.title }}
                 </h6>
             </a>
-            <p id="author" class="mt-1 pl-4">
+            <p id="author" class="mt-1 pl-lg-4">
                 by {{ book.author }}
             </p>
         </div>

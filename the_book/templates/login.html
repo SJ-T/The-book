@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="">
+
+<div id="log-form" class="w-75">
     <form action="" method="POST">
         {{ form.hidden_tag()}}
         <fieldset class="form-group">
@@ -51,11 +52,11 @@
             <a href="#">Forget Password?</a>
         </small>
     </form>
-</div>
-<div class="border-top pt-3">
-    <small class="text-muted">
-        Need an account? <a href="{{url_for('register')}}" class="ml-2">Sign Up</a>
-    </small>
-</div>
 
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Need an account? <a href="{{url_for('register')}}" class="ml-2">Sign Up</a>
+        </small>
+    </div>
+</div>
 {% endblock %}
