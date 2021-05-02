@@ -1,8 +1,17 @@
 {% extends "contentbase.html" %}
 {% block content %}
 <div class="row d-flex p-3  flex-wrap justify-content-between" id="result-box">
-    {% for book in book_result%}
+    {% with messages=get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div id="no-results-msg" class="mx-auto w-50 alert alert-{{ category }} ">
+        {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
+    {% for book in book_result%}
     <div id="book-item" class="book-item col-md-5 col-lg-3 col-xl-3 m-1 mb-sm-3 mb-xs-3 mb-2">
         <div id="cover">
             {% if book.isbn=="null"%}

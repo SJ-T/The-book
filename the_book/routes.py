@@ -32,9 +32,11 @@ def index():
 @app.route('/search_result')
 @app.route('/search_result/<search>&<by>')
 def search_result(search,by):
-    
     book_result = Book.query.filter(getattr(Book,str(by)).ilike(f'%{search}%')).all()
-    print(book_result)
+    print(bool(book_result))
+    if not book_result:
+         flash("Sorry, no results found.", "info")
+         return render_template('search_result.html')
     return render_template('search_result.html', book_result=book_result)
 
 @app.route('/book_detail/<book_id>')
@@ -77,17 +79,22 @@ def add_to_shelf(book_id):
 
 
 @app.route('/add_rating/<book_id>', methods=['POST'])
-# @login_required 
+@login_required 
 def add_rating(book_id):
     
     user = User.query.filter_by(id=current_user.id).first()
     book = Book.query.filter_by(id=book_id).first()
-    star = request.form.get('star')
-    print(user, book, star)
+    star = int(request.form.get('star'))
+    total_rating = round(book.average_rating * book.ratings_count, 2)
+
+    # print(user, book, star)
     try:
         rating = BookRating(user=user, book=book, rating=star)
-        print(rating.user_id)
+        # print(rating.user_id)
         db.session.add(rating)
+        db.session.commit()
+        book.ratings_count = book.ratings_count + 1
+        book.average_rating = round((total_rating+star)/book.ratings_count,2)
         db.session.commit()
         flash('Your ratings have been added!', 'success')
         return redirect(url_for('book_detail', book_id=book.id))
@@ -95,6 +102,8 @@ def add_rating(book_id):
         db.session.rollback()
         rating = BookRating.query.filter_by(user=user, book=book).first()
         rating.rating=star
+        #TODO: update the average_rating
+
         db.session.commit()
         flash('Your ratings have been updated.','success')
         return redirect(url_for('book_detail', book_id=book.id))
@@ -163,19 +172,17 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
 
+    #TODO: order by most recent added books
+
     book_list = Book.query.filter(Book.readers.any(id=current_user.id)).all()
-    # rate_books = Book.query.filter(Book.raters.has(user_id=current_user.id)).all()
     rate_books = BookRating.query.filter_by(user_id=current_user.id).all()
-    # for rating in rate_books:
-    #     print(rating.book.isbn)
-    #     print(rating.rating)
+    for rating in rate_books:
+        print(rating)
+        # print(rating.book.id)
+        # print(rating.rating)
 
-    # for book in rate_books:
-    #     ratings = book.raters.rating
-    #     print(ratings)
 
-    # print(book_list)
-    # print(book_rating)
+
     return render_template('account.html', title='Account', form=form, book_list=book_list, rate_books=rate_books)
 
 
