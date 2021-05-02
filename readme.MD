@@ -1,12 +1,16 @@
-# Flask Website Starter Template 
+## This project is not ready for deploy to Google Cloud.
+Right now it only runs okay locally. So please clone this repository and run it at localhost.
 
-This repository is a starter template intended to be forked and used for your own website. The focus here is on having a slim, working, full-stack website which can be (relatively) easily built, tested, and deployed on Google App Engine using GitHub actions. It is meant intended primarily for students of the Foundations of Software Engineering Course run in the spring of 2021 at CODE University of Applied Sciences, based in Berlin, Germany, but run remotely due to the pandemic. This README assume that the reader already has a basic familiarity with a broad range of topics and technologies touched on in that class, so it lacks explanation, but may occasionally make reference to something done in that class. 
+###Get Started
+#####Clone it to your computer
+- Create a new folder, change directory into that new folder
+- `git clone <repoURL>`
+#####
+## Every Time You Run The Project
 
-## Every Time You Develop on Your Project
+Every time you restart your computer or reopen shell, you'll have to do a few things. Instructions for macOS and Linux distributions assume you are using a Bash shell. Instructions for Windows assume you are using the Command Prompt. Instructions for other shells can be found online. 
 
-Every time you restart your computer or reopen VSCode, you'll have to do a few things. Instructions for macOS and Linux distributions assume you are using a Bash shell. Instructions for Windows assume you are using the Command Prompt. Instructions for other shells can be found online. 
-
-- Activate your virtual environment for this project: 
+- Activate your virtual environment for this project : 
    
     macOS/Linux: `source venv/bin/activate`
     
@@ -26,36 +30,13 @@ Every time you restart your computer or reopen VSCode, you'll have to do a few t
 
     `flask run`
 
-## While You're Developing... 
-
-Whenever you deploy your code, it will be automatically testing and linted by the GitHub Action. To have a quicker feedback loop and to make sure there are as few surprises as possible, run the same commands locally, too:
-
-To test your app: 
-
-> pytest --doctest-modules
-
-To Lint your app: 
-> flake8 --exclude venv 
-
-
-# Installation Instructions
-This will be a quick overview of steps for how to use this template on your own project, but will not be a line-for-line cookbook. You can find deeper explanations, tips, and instructions in the [Foundation's main class repository](https://github.com/DrAdamRoe/foundations-sample-website), used for homework assignments. 
 
 ## Before you start... 
 You should have:
 - Python 3.8.x installed on your computer 
 - Visual Studio Code (or another IDE of your choosing) installed on your computer 
 - A GitHub account 
-- A Google Cloud Platform account (with class credits)
 
-### Make This Your Own
-
-Ready to go? Start by making this project your own:
-- Fork this repository into your GitHub account. This is a good time to rename the repository to have the name of your project - but you can do it later, too. 
-- Choose (or create) a working directory on your own computer and change directory into it
-- Clone _your_ version onto your computer in that working directory.
-
-Now you should be ready to get the starter template running on your computer!
 
 ### Get Set Up for Local Development: 
 - Open Visual Studio Code, and open the folder containing your locally cloned repository. Before editing the code, make sure everything works as expected, locally at least.  
