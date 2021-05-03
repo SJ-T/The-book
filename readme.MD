@@ -1,4 +1,4 @@
-## This project is not ready for deploy to Google Cloud.
+## This project is not ready for deploy.
 Right now it only runs okay locally. So please clone this repository and run it at localhost.
 
 ### Get Started
