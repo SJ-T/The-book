@@ -6,7 +6,7 @@ from the_book.config import Config
 import os
 app = Flask(__name__)
 
-
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 # Initialize database
 if os.environ.get('DATABASE_URL'):
   # Set the database URL from the environment variable if it is set. 
