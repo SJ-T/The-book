@@ -1,6 +1,10 @@
 # file to configure flask, loaded into our flask application
 # using the line: app.config.from_pyfile("config.py") in website.py
-from os import environ
+import os
+from dotenv import load_dotenv
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
 
 # These variables be available to your application to use.
 # Things that may be different on different computers, like a path to a file,
@@ -8,7 +12,16 @@ from os import environ
 
 # For example, you can add the port you wish to run on as a variable.
 # This can then be used when running the code.
-MY_PORT = "5000"
+# MY_PORT = "5000"
+class Config:
+    # TESTING = True
+    # DEBUG = True
+    # FLASK_ENV = 'development'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+    print(SECRET_KEY, SQLALCHEMY_DATABASE_URI)
+
 
 # !!! Important !!!
 # Anything written in this file is effectively public knowledge.
@@ -30,4 +43,6 @@ MY_PORT = "5000"
 # by adding it as a repository secret, like with our google cloud credentials.
 # Those passwords can then be added dynamically to app.yaml by the GitHub
 # Action step called "Prepare Deployment" on line 36 of main.yaml.
-DATABASE_PASSWORD = environ.get('DB_PASSWORD')
+
+
+# DATABASE_PASSWORD = environ.get('DB_PASSWORD')

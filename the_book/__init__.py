@@ -2,14 +2,21 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-
+from the_book.config import Config
+import os
 app = Flask(__name__)
 
 
-# configure Flask using environment variables
-app.config.from_pyfile("config.py")
-app.config['SECRET_KEY'] = 'b238e0be14d21f94350bbd6c18b9defd'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+# Initialize database
+if os.environ.get('DATABASE_URL'):
+  # Set the database URL from the environment variable if it is set. 
+  # The .replace() is a workaround because of a mismatch between Heroku's default set up and SQLAlchemy
+  app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("://", "ql://", 1)
+else:
+  # Use SQLite as a fallback and locally
+    app.config.from_object(Config)
+
+
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
