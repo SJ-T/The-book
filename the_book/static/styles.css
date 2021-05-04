@@ -187,3 +187,21 @@ input.form-control.form-control-lg {
     border: 3px solid black;
   }
 }
+
+@media (max-width: 500px) {
+
+  .flex-items {
+    max-width: unset;
+    left: unset;
+    margin-right: unset;
+    margin-left: -48px;
+  }
+  .flex-items #sea-inp{
+    flex-grow: 1;
+    width: unset !important;
+  }
+  input.search-input {
+    max-width:unset;
+  
+  }
+}
