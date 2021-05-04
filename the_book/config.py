@@ -18,9 +18,7 @@ class Config:
     # DEBUG = True
     # FLASK_ENV = 'development'
     SECRET_KEY = os.environ.get('SECRET_KEY')
-
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
-    print(SECRET_KEY, SQLALCHEMY_DATABASE_URI)
 
 
 # !!! Important !!!
