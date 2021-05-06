@@ -26,32 +26,79 @@ jQuery(function () {
 
 });
 
-function addToShelf(bookId) {
+function addToShelf(event, bookId) {
     // TODO: login required
+    // 
+    event.preventDefault();
+    const msg = document.createElement("div");
+    const pageDiv = document.getElementById('content-page');
+    const secPart = document.getElementById('sec-par');
+    msg.setAttribute("id", "alert-message")
 
-    //TODO: get book_id 
-
-    //TODO: fetch a route use post method, body with book_id
-    fetch("/api/shelf", {
-        method: "POST",
-        body: bookId
+    fetch("/book_detail/" + bookId + "/add_to_shelf", {
+        method: "POST"
     })
-        //TODO: fetch .then  get the response
         .then(
             function (response) {
-                if (response != 201) {
-                    console.log(
-                        "Looks like there was a problem. Status Code: " + response.status
-                    );
+                if (response.status === 201) {
+                    msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-success");
+                    msg.textContent = "The book is successfully added to your shelf!";
+                    pageDiv.insertBefore(msg, secPart);
                 }
-                //TODO: show the success msg to the view
-                const add = document.getElementById("add-to-shelf")
-                const msg = document.createElement("div")
-                msg.setAttribute("class", "alert")
-                msg.textContent("The book is successfully added to your shelf!")
+                //show the fail msg to the view
+                else if (response.status === 409) {
+                    let alert = document.getElementById("alert-message")
+                    if (pageDiv.contains(alert)) {
+                        pageDiv.removeChild(alert)
+                    }
+                    msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-info");
+                    msg.textContent = "The book is already in your shelf.";
+                    setTimeout(() => { pageDiv.insertBefore(msg, secPart) }, 300);
+                } else {
+                    console.log("Looks like there was a problem.")
+                }
             }
         )
-        // TODO: fetch .catch
+        .catch(function (err) {
+            console.log("Fetch error: ", err)
+        })
+}
+
+function addRating(event, bookId) {
+    // TODO: login required
+    // 
+    event.preventDefault();
+    const formData = new FormData(document.getElementById("rate"));
+    const msg = document.createElement("div");
+    const pageDiv = document.getElementById('content-page');
+    const secPart = document.getElementById('sec-par');
+    msg.setAttribute("id", "alert-message")
+
+    fetch("/book_detail/" + bookId + "/add_rating", {
+        method: "POST",
+        body: formData
+    })
+        .then(
+            function (response) {
+                if (response.status === 201) {
+                    msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-success");
+                    msg.textContent = "Your ratings have been added!";
+                    pageDiv.insertBefore(msg, secPart);
+                }
+                //show the fail msg to the view
+                else if (response.status === 409) {
+                    let alert = document.getElementById("alert-message")
+                    if (pageDiv.contains(alert)) {
+                        pageDiv.removeChild(alert)
+                    }
+                    msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-info");
+                    msg.textContent = "Your ratings have been updated.";
+                    setTimeout(() => { pageDiv.insertBefore(msg, secPart) }, 300);
+                } else {
+                    console.log("Looks like there was a problem.")
+                }
+            }
+        )
         .catch(function (err) {
             console.log("Fetch error: ", err)
         })

@@ -39,80 +39,101 @@ def search_result(search,by):
          return render_template('search_result.html')
     return render_template('search_result.html', book_result=book_result)
 
-@app.route('/book_detail/<book_id>')
+@app.route('/book_detail/<book_id>', methods=['GET','POST'])
 def book_detail(book_id):
     book = Book.query.filter_by(id=book_id).first()
     title = book.title
     isbn = book.isbn
     return render_template('book_detail.html',book=book, title=title, isbn=isbn)
 
-@app.route('/boo_detail/<book_id>/add_to_shelf', methods=['GET', 'POST'])
-@login_required 
-def add_to_shelf(book_id):
-    if request.method == 'GET':
-        return redirect(url_for('book_detail',book_id=book_id))
-    else:
-        user = User.query.filter_by(id=current_user.id).first()
-        book = Book.query.filter_by(id=book_id).first()
-        try:
-            #add record to composite key table(many to many), 'readers' is the backref defined in the User class(table)
-            book.readers.append(user)
-            db.session.commit()
-            flash('The book is successfully added to your shelf!', 'success')
-            return redirect(url_for('book_detail', book_id=book.id))
-        except IntegrityError:
-            db.session.rollback()
-            flash('The book is already in your shelf.','info')
-            return redirect(url_for('book_detail', book_id=book.id))
-
-# @app.route('/api/shelf', methods=['POST'])
+# @app.route('/book_detail/<book_id>/add_to_shelf', methods=['GET', 'POST'])
+# @login_required 
 # def add_to_shelf(book_id):
-#     print(book_id)
-#     user = User.query.filter_by(id=current_user.id).first()
-#     book = Book.query.filter_by(id=book_id).first()
-#     try:
-#         #add record to composite key table(many to many), 'readers' is the backref defined in the User class(table)
-#         book.readers.append(user)
-#         db.session.commit()
-#         return Response(status=201)
-#     except IntegrityError:
-#         db.session.rollback()
-#         error_code = 500
-#         return error_code
+#     # if a user is redirect back from the login page, the HTTP method will be GET
+#     if request.method == 'GET':
+#         return redirect(url_for('book_detail',book_id=book_id))
+#     else:
+#         user = User.query.filter_by(id=current_user.id).first()
+#         book = Book.query.filter_by(id=book_id).first()
+#         try:
+#             #add record to composite key table(many to many), 'readers' is the backref defined in the User class(table)
+#             book.readers.append(user)
+#             db.session.commit()
+#             flash('The book is successfully added to your shelf!', 'success')
+#             return redirect(url_for('book_detail', book_id=book.id))
+#         except IntegrityError:
+#             db.session.rollback()
+#             flash('The book is already in your shelf.','info')
+#             return redirect(url_for('book_detail', book_id=book.id))
+
+@app.route('/book_detail/<book_id>/add_to_shelf', methods=['POST'])
+def add_to_shelf(book_id):
+    user = User.query.filter_by(id=current_user.id).first()
+    book = Book.query.filter_by(id=book_id).first()
+    try:
+        #add record to composite key table(many to many), 'readers' is the backref defined in the User class(table)
+        book.readers.append(user)
+        db.session.commit()
+        return Response(status=201)
+    except IntegrityError:
+        db.session.rollback()
+        return Response(status=409)
 
 
-@app.route('/boo_detail/<book_id>/add_rating', methods=['GET', 'POST'])
-@login_required 
+# @app.route('/book_detail/<book_id>/add_rating', methods=['GET', 'POST'])
+# @login_required 
+# def add_rating(book_id):
+#     if request.method == 'GET':
+#         return redirect(url_for('book_detail',book_id=book_id))
+#     else:    
+#         user = User.query.filter_by(id=current_user.id).first()
+#         book = Book.query.filter_by(id=book_id).first()
+#         star = int(request.form.get('star'))
+#         total_rating = round(book.average_rating * book.ratings_count, 2)
+
+#         # print(user, book, star)
+#         try:
+#             rating = BookRating(user=user, book=book, rating=star)
+#             # print(rating.user_id)
+#             db.session.add(rating)
+#             db.session.commit()
+#             book.ratings_count = book.ratings_count + 1
+#             book.average_rating = round((total_rating+star)/book.ratings_count,2)
+#             db.session.commit()
+#             flash('Your ratings have been added!', 'success')
+#             return redirect(url_for('book_detail', book_id=book.id))
+#         except IntegrityError:
+#             db.session.rollback()
+#             rating = BookRating.query.filter_by(user=user, book=book).first()
+#             rating.rating=star
+#             #TODO: update the average_rating
+
+#             db.session.commit()
+#             flash('Your ratings have been updated.','success')
+#             return redirect(url_for('book_detail', book_id=book.id))
+
+@app.route('/book_detail/<book_id>/add_rating', methods=['POST'])
 def add_rating(book_id):
-    if request.method == 'GET':
-        return redirect(url_for('book_detail',book_id=book_id))
-    else:    
-        user = User.query.filter_by(id=current_user.id).first()
-        book = Book.query.filter_by(id=book_id).first()
-        star = int(request.form.get('star'))
-        total_rating = round(book.average_rating * book.ratings_count, 2)
+    user = User.query.filter_by(id=current_user.id).first()
+    book = Book.query.filter_by(id=book_id).first()
+    star = int(request.form.get('star'))
+    total_rating = round(book.average_rating * book.ratings_count, 2)
+    try:
+        rating = BookRating(user=user, book=book, rating=star)
+        db.session.add(rating)
+        db.session.commit()
+        book.ratings_count = book.ratings_count + 1
+        book.average_rating = round((total_rating+star)/book.ratings_count,2)
+        db.session.commit()
+        return Response(status=201)
+    except IntegrityError:
+        db.session.rollback()
+        rating = BookRating.query.filter_by(user=user, book=book).first()
+        rating.rating=star
+        #TODO: update the average_rating
 
-        # print(user, book, star)
-        try:
-            rating = BookRating(user=user, book=book, rating=star)
-            # print(rating.user_id)
-            db.session.add(rating)
-            db.session.commit()
-            book.ratings_count = book.ratings_count + 1
-            book.average_rating = round((total_rating+star)/book.ratings_count,2)
-            db.session.commit()
-            flash('Your ratings have been added!', 'success')
-            return redirect(url_for('book_detail', book_id=book.id))
-        except IntegrityError:
-            db.session.rollback()
-            rating = BookRating.query.filter_by(user=user, book=book).first()
-            rating.rating=star
-            #TODO: update the average_rating
-
-            db.session.commit()
-            flash('Your ratings have been updated.','success')
-            return redirect(url_for('book_detail', book_id=book.id))
-
+        db.session.commit()
+        return Response(status=409)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

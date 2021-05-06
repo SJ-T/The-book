@@ -19,12 +19,18 @@
             <div class="d-block">Published {{book.publication_date}} by {{book.publisher}}</div>
         </div>
 
-        <div id="add-to-shelf" class="mt-lg-3 ml-lg-3">
+        <!-- <div id="add-to-shelf" class="mt-lg-3 ml-lg-3">
             <form action="{{ url_for('add_to_shelf', book_id=book.id)}}" method="POST">
                 <input type="submit" class="btn btn-lg p-0" value="Add to my shelf">
             </form>
-
+        </div> -->
+        <div id="add-to-shelf" class="mt-lg-3 ml-lg-3">
+            <form onsubmit="addToShelf(event, '{{book.id}}')">
+                <input type="submit" class="btn btn-lg p-0" value="Add to my shelf">
+            </form>
         </div>
+
+
 
         <div id="ratings" class="mt-1 ml-lg-4">
             <div id="numbers" class="">
@@ -60,8 +66,16 @@
         </div>
     </div>
     <span id="sec-tit" class="prom">How do you this book?</span>
+
+
+    <!-- function(event){addToShelf('{{book.id}}', event)} -->
+    <!-- <div id="add-to-shelf" class="mt-lg-3 ml-lg-3">
+            <form onsubmit="function(event){addToShelf('{{book.id}}', event);}">
+                <input type="submit" class="btn btn-lg p-0" value="Add to my shelf">
+            </form>
+    </div> -->
     <div id="rating-f">
-        <form action="{{url_for('add_rating',book_id=book.id)}}" method="POST" id="rate" class="rate  pl-3">
+        <form onsubmit="addRating(event, '{{book.id}}')" method="POST" id="rate" class="rate  pl-3">
             <input type="radio" name="star" id="star5" value="5"><label for="star5">5</label>
             <input type="radio" name="star" id="star4" value="4"><label for="star4">4</label>
             <input type="radio" name="star" id="star3" value="3"><label for="star3">3</label>
@@ -70,6 +84,18 @@
         </form>
         <input class="border-0 rounded ml-4" type="submit" value="Submit" form="rate">
     </div>
+
+
+    <!-- <div id="rating-f">
+        <form action="{{url_for('add_rating',book_id=book.id)}}" method="POST" id="rate" class="rate  pl-3">
+            <input type="radio" name="star" id="star5" value="5"><label for="star5">5</label>
+            <input type="radio" name="star" id="star4" value="4"><label for="star4">4</label>
+            <input type="radio" name="star" id="star3" value="3"><label for="star3">3</label>
+            <input type="radio" name="star" id="star2" value="2"><label for="star2">2</label>
+            <input type="radio" name="star" id="star1" value="1"><label for="star1">1</label>
+        </form>
+        <input class="border-0 rounded ml-4" type="submit" value="Submit" form="rate">
+    </div> -->
 
 </div>
 
