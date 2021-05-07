@@ -3,7 +3,7 @@
 
 <div id="book-detail" class="row">
     <div id="cover" class="pl-2 col-5 p-0">
-        {% if book.isbn=="null"%}
+        {% if not book.isbn%}
         <img src="/static/default-cover.jpg" height="450" alt="default-cover" class=" mt-2 ">
         {% else%}
         <img src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-L.jpg" height="450" alt="cover-img" class=" mt-2 ">

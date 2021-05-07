@@ -43,16 +43,18 @@ function addToShelf(event, bookId) {
                     msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-success");
                     msg.textContent = "The book is successfully added to your shelf!";
                     pageDiv.insertBefore(msg, secPart);
+                    setTimeout(() => { pageDiv.removeChild(msg) }, 3000);
                 }
                 //show the fail msg to the view
                 else if (response.status === 409) {
-                    let alert = document.getElementById("alert-message")
-                    if (pageDiv.contains(alert)) {
-                        pageDiv.removeChild(alert)
-                    }
+                    // let alert = document.getElementById("alert-message")
+                    // if (pageDiv.contains(alert)) {
+                    //     pageDiv.removeChild(alert)
+                    // }
                     msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-info");
                     msg.textContent = "The book is already in your shelf.";
-                    setTimeout(() => { pageDiv.insertBefore(msg, secPart) }, 300);
+                    pageDiv.insertBefore(msg, secPart);
+                    setTimeout(() => { pageDiv.removeChild(msg) }, 3000);
                 }
                 // redirect to login page if user is not logged in
                 else if (response.redirected) {
@@ -87,6 +89,7 @@ function addRating(event, bookId) {
                     msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-success");
                     msg.textContent = "Your ratings have been added!";
                     pageDiv.insertBefore(msg, secPart);
+                    setTimeout(() => { pageDiv.removeChild(msg) }, 3000);
                 }
                 //show the fail msg to the view
                 else if (response.status === 409) {
@@ -96,7 +99,8 @@ function addRating(event, bookId) {
                     }
                     msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-info");
                     msg.textContent = "Your ratings have been updated.";
-                    setTimeout(() => { pageDiv.insertBefore(msg, secPart) }, 300);
+                    pageDiv.insertBefore(msg, secPart)
+                    setTimeout(() => { pageDiv.removeChild(msg) }, 3000);
                 }
                 // redirect to login page if user is not logged in
                 else if (response.redirected) {
