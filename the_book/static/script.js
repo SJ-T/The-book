@@ -27,8 +27,7 @@ jQuery(function () {
 });
 
 function addToShelf(event, bookId) {
-    // TODO: login required
-    // 
+
     event.preventDefault();
     const msg = document.createElement("div");
     const pageDiv = document.getElementById('content-page');
@@ -36,7 +35,7 @@ function addToShelf(event, bookId) {
     msg.setAttribute("id", "alert-message")
 
     fetch("/book_detail/" + bookId + "/add_to_shelf", {
-        method: "POST"
+        method: "POST",
     })
         .then(
             function (response) {
@@ -54,7 +53,12 @@ function addToShelf(event, bookId) {
                     msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-info");
                     msg.textContent = "The book is already in your shelf.";
                     setTimeout(() => { pageDiv.insertBefore(msg, secPart) }, 300);
-                } else {
+                }
+                // redirect to login page if user is not logged in
+                else if (response.redirected) {
+                    window.location.href = response.url
+                }
+                else {
                     console.log("Looks like there was a problem.")
                 }
             }
@@ -65,8 +69,7 @@ function addToShelf(event, bookId) {
 }
 
 function addRating(event, bookId) {
-    // TODO: login required
-    // 
+
     event.preventDefault();
     const formData = new FormData(document.getElementById("rate"));
     const msg = document.createElement("div");
@@ -94,6 +97,10 @@ function addRating(event, bookId) {
                     msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-info");
                     msg.textContent = "Your ratings have been updated.";
                     setTimeout(() => { pageDiv.insertBefore(msg, secPart) }, 300);
+                }
+                // redirect to login page if user is not logged in
+                else if (response.redirected) {
+                    window.location.href = response.url
                 } else {
                     console.log("Looks like there was a problem.")
                 }

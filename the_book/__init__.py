@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from the_book.config import Config
+# from the_book.config import Config
 import os
 app = Flask(__name__)
 
@@ -14,7 +14,7 @@ if os.environ.get('DATABASE_URL'):
   app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("://", "ql://", 1)
 else:
   # Use SQLite as a fallback and locally
-    app.config.from_object(Config)
+    app.config.from_pyfile('config.py')
 
 
 db = SQLAlchemy(app)

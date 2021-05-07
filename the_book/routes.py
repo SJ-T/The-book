@@ -1,4 +1,4 @@
-from flask import render_template, request, flash, redirect, url_for, Response
+from flask import render_template, request, flash, redirect, url_for, Response, session
 from the_book import app, db, bcrypt
 # reference to the_book package
 from the_book.forms import RegistrationForm, LoginForm, UpdateAccountForm, SearchForm
@@ -50,8 +50,8 @@ def book_detail(book_id):
 # @login_required 
 # def add_to_shelf(book_id):
 #     # if a user is redirect back from the login page, the HTTP method will be GET
-#     if request.method == 'GET':
-#         return redirect(url_for('book_detail',book_id=book_id))
+    if request.method == 'GET':
+        return redirect(url_for('book_detail',book_id=book_id))
 #     else:
 #         user = User.query.filter_by(id=current_user.id).first()
 #         book = Book.query.filter_by(id=book_id).first()
@@ -66,8 +66,11 @@ def book_detail(book_id):
 #             flash('The book is already in your shelf.','info')
 #             return redirect(url_for('book_detail', book_id=book.id))
 
-@app.route('/book_detail/<book_id>/add_to_shelf', methods=['POST'])
+@app.route('/book_detail/<book_id>/add_to_shelf', methods=['GET','POST'])
+@login_required
 def add_to_shelf(book_id):
+    if request.method == 'GET':
+        return redirect(url_for('book_detail',book_id=book_id))
     user = User.query.filter_by(id=current_user.id).first()
     book = Book.query.filter_by(id=book_id).first()
     try:
@@ -75,6 +78,7 @@ def add_to_shelf(book_id):
         book.readers.append(user)
         db.session.commit()
         return Response(status=201)
+        # return redirect(url_for('index'))
     except IntegrityError:
         db.session.rollback()
         return Response(status=409)
@@ -112,7 +116,8 @@ def add_to_shelf(book_id):
 #             flash('Your ratings have been updated.','success')
 #             return redirect(url_for('book_detail', book_id=book.id))
 
-@app.route('/book_detail/<book_id>/add_rating', methods=['POST'])
+@app.route('/book_detail/<book_id>/add_rating', methods=['GET','POST'])
+@login_required
 def add_rating(book_id):
     user = User.query.filter_by(id=current_user.id).first()
     book = Book.query.filter_by(id=book_id).first()
