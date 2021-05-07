@@ -47,10 +47,6 @@ function addToShelf(event, bookId) {
                 }
                 //show the fail msg to the view
                 else if (response.status === 409) {
-                    // let alert = document.getElementById("alert-message")
-                    // if (pageDiv.contains(alert)) {
-                    //     pageDiv.removeChild(alert)
-                    // }
                     msg.setAttribute("class", "w-75 mx-auto mt-3 alert alert-info");
                     msg.textContent = "The book is already in your shelf.";
                     pageDiv.insertBefore(msg, secPart);
