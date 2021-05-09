@@ -1,6 +1,9 @@
-## This project is not ready for deploy.
-Right now it only runs okay locally. So please clone this repository and run it at localhost.
+## Check out this project on Heroku.
+https://desolate-shelf-39908.herokuapp.com/
+I use dataset of books as books' info stored in my database. This is the dataset source: https://www.kaggle.com/austinreese/goodreads-books .
+Due to free postgres database limit on heroku, I only uploaded 7000 rows of book data. If you run it locally, it should contains around 50,000 rows of data. The only difference between the web app at local and heroku is number of search results. 
 
+## Run it on your computer locally
 ### Get Started
 ##### Clone it to your computer
 - Create a new folder, change directory into that new folder
