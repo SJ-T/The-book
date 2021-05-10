@@ -43,4 +43,9 @@ Due to free postgres database limit on heroku, I only uploaded 7000 rows of book
 - Quit the web app
     Press CTRL+C in terminal
 
+## Sources:
+- FLASK blog tutorial by *Corey Schafer*: https://www.youtube.com/playlist?list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH
+- Goodreads Books - 31 Features by *Austin Reese*: https://www.kaggle.com/austinreese/goodreads-books
+- 5 star rating with css and html by *hongde_he*: https://codepen.io/hesguru/pen/BaybqXv
+- Five Methods for Five-Star Ratings by *Alfred Genkin*: https://css-tricks.com/five-methods-for-five-star-ratings/
 
