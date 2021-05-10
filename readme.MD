@@ -11,6 +11,11 @@ This is a book-searching web app. Like the description, it can search books and 
 - Flask framework.
 - Sqlite database locally and postgres database on server.
 
+**Defects**
+- If you update the ratings you gave, the average ratings won't update.
+- The books on the shelf cannot be deleted.
+- Reset password part hasn't been implemented.
+- The book detail page on deployed web app cannot hide excess text in the description.(While it works fine locally)
 
 ## Check out this project on Heroku.
 https://desolate-shelf-39908.herokuapp.com/
