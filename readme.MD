@@ -1,5 +1,5 @@
 ## The Book
-This is a book-searching web app. Like the description, it can search books and give you some info about books for you.
+This is a book-searching web app. Like the description, it can search books and give you some info about books.
 
 **Main Features**
 - Search books by its title, author or ISBN.
